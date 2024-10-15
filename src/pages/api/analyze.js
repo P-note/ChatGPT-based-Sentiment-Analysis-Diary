@@ -1,40 +1,41 @@
-import { Configuration, OpenAIApi } from 'openai';
+// src/pages/api/diary/analyze.js
+
+import { OpenAI } from 'openai';
+import { protect } from '@/middleware/authMiddleware';
 
 export default async function handler(req, res) {
   const { method } = req;
 
-  if (method !== 'POST') {
-    return res.status(405).json({ message: `Method ${method} not allowed` });
-  }
+  if (method === 'POST') {
+    const isAuthenticated = await protect(req, res);
+    if (!isAuthenticated) return;
 
-  const { content } = req.body;
+    const { text } = req.body;
 
-  if (!content) {
-    return res.status(400).json({ message: 'Content is required' });
-  }
+    try {
 
-  const configuration = new Configuration({
-    apiKey: process.env.OPENAI_API_KEY,
-  });
+      const openai = new OpenAI({
+        apiKey: process.env['OPENAI_API_KEY']
+      });
 
-  const openai = new OpenAIApi(configuration);
+      const response = await openai.chat.completions.create({
+        model: 'gpt-4',
+        messages: [
+          { role: 'system', content: 'You are a professional Psychoterapist. You will answer in Korean.' },
+          { role: 'user', content: `Analyze the sentiment of the following text:\n\n"${text}"\n\nProvide a sentiment analysis, along with a few advices depending on the sentiment.` },
+        ]
+      });
 
-  try {
-    const messages = [
-      { role: 'system', content: '당신은 감정 분석 전문가입니다.' },
-      { role: 'user', content: `다음 일기의 감정을 분석하고, 세 줄 이하로 요약해줘.:\n\n"${content}"\n\n감정 분석 결과를 기반으로 간단한 조언을 줘.` },
-    ];
+      const analysis = response.choices[0].message.content;
 
-    const completion = await openai.createChatCompletion({
-      model: 'gpt-3.5-turbo',
-      messages,
-    });
-
-    const analysis = completion.data.choices[0].message.content.trim();
-
-    res.status(200).json({ analysis });
-  } catch (error) {
-    console.error('OpenAI API Error:', error.response?.data || error.message);
-    res.status(500).json({ message: 'Failed to analyze content' });
+      // 분석 결과 반환
+      return res.status(200).json({ analysis });
+    } catch (error) {
+      console.error('감정 분석 오류:', error);
+      return res.status(500).json({ message: '감정 분석 중 오류가 발생했습니다.' });
+    }
+  } else {
+    res.setHeader('Allow', ['POST']);
+    res.status(405).json({ message: `Method ${method} not allowed` });
   }
 }
