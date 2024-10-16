@@ -5,12 +5,15 @@ export default function Dashboard() {
   const [diaries, setDiaries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [selectedDiaries, setSelectedDiaries] = useState([]); // 선택된 일기들
+  const [analysis, setAnalysis] = useState('');
+  const [modalOpen, setModalOpen] = useState(false); // 모달 상태
   const router = useRouter();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
-      router.push('/login'); // 로그인되지 않은 사용자는 로그인 페이지로 리디렉션
+      router.push('/login');
       return;
     }
 
@@ -39,18 +42,56 @@ export default function Dashboard() {
     fetchDiaries();
   }, [router]);
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    router.push('/login');
+  };
+
   const handleNewDiary = () => {
     router.push('/diary/create'); // 일기 작성 페이지로 이동
   };
 
   const handleDiaryClick = (id) => {
-    router.push(`/diary/${id}`); // 일기 세부 페이지로 이동
+    router.push(`/diary/${id}`); //
   };
 
-  // 로그아웃 처리
-  const handleLogout = () => {
-    localStorage.removeItem('token'); // JWT 토큰 삭제
-    router.push('/login'); // 로그인 페이지로 리디렉션
+  // 여러 일기 체크, 해제 관리
+  const handleSelectDiary = (id) => {
+    setSelectedDiaries((prevSelected) =>
+      prevSelected.includes(id)
+        ? prevSelected.filter((diaryId) => diaryId !== id)
+        : [...prevSelected, id]
+    );
+  };
+
+  // 체크된 일기 내용 모두 분석
+  const handleAnalyzeSelectedDiaries = async () => {
+    if (selectedDiaries.length === 0) {
+      alert('분석할 일기를 선택하세요.');
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem('token');
+      const res = await fetch(`/api/analyzeMultiple`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ diaryIds: selectedDiaries }),
+      });
+
+      if (!res.ok) {
+        throw new Error('감정 분석에 실패했습니다.');
+      }
+
+      const data = await res.json();
+      setAnalysis(data.analysis); // 감정 분석 결과 설정
+      setModalOpen(true); // 모달 열기
+    } catch (error) {
+      setError('감정 분석 중 오류가 발생했습니다.');
+    }
   };
 
   return (
@@ -61,8 +102,8 @@ export default function Dashboard() {
           <button style={styles.button} onClick={handleNewDiary}>
             새 일기 작성
           </button>
-          <button style={styles.logoutButton} onClick={handleLogout}>
-            로그아웃
+          <button style={styles.analyzeButton} onClick={handleAnalyzeSelectedDiaries}>
+            감정 분석
           </button>
         </div>
       </header>
@@ -76,17 +117,42 @@ export default function Dashboard() {
       ) : (
         <ul style={styles.list}>
           {diaries.map((diary) => (
-            <li
-              key={diary._id}
-              style={styles.listItem}
-              onClick={() => handleDiaryClick(diary._id)}
-            >
-              <h2 style={styles.title}>{diary.title}</h2>
-              <p>{diary.content.substring(0, 100)}...</p>
-              <small>{new Date(diary.date).toLocaleDateString()}</small>
+            <li key={diary._id} style={styles.listItem}>
+              <input
+                type="checkbox"
+                checked={selectedDiaries.includes(diary._id)}
+                onChange={() => handleSelectDiary(diary._id)}
+                style={styles.checkbox}
+              />
+              <div style={styles.diaryContent}>
+                <h2 style={styles.title}>{diary.title}</h2>
+                <p style={styles.content}
+                 onClick={() => handleDiaryClick(diary._id)}>
+                  {diary.content.substring(0, 100)}...</p>
+              </div>
+              <small style={styles.date}>{new Date(diary.date).toLocaleDateString()}</small>
             </li>
           ))}
         </ul>
+      )}
+
+      <footer>
+        <br />
+        <br />
+        <button style={styles.logoutButton} onClick={handleLogout}>로그아웃</button>
+      </footer>
+
+      {/* 모달창 */}
+      {modalOpen && (
+        <div style={styles.modal}>
+          <div style={styles.modalContent}>
+            <h2>감정 분석 결과</h2>
+            <p>{analysis}</p>
+            <button onClick={() => setModalOpen(false)} style={styles.closeButton}>
+              닫기
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );
@@ -116,7 +182,15 @@ const styles = {
   },
   logoutButton: {
     padding: '10px 20px',
-    backgroundColor: '#f97272',
+    backgroundColor: '#f53d3d',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+  },
+  analyzeButton: {
+    padding: '10px 20px',
+    backgroundColor: '#4CAF50',
     color: '#fff',
     border: 'none',
     borderRadius: '5px',
@@ -127,13 +201,63 @@ const styles = {
     padding: 0,
   },
   listItem: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     padding: '15px',
     borderBottom: '1px solid #ccc',
     textAlign: 'left',
-    cursor: 'pointer',
+    gap: '10px',
+  },
+  checkbox: {
+    marginRight: '10px',
+  },
+  diaryContent: {
+    flexGrow: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
   },
   title: {
-    color: '#0070f3',
+    fontSize: '18px',
+    fontWeight: 'bold',
+    margin: 0,
+  },
+  content: {
+    margin: 0,
+    color: '#555',
+    fontSize: '14px',
+  },
+  date: {
+    whiteSpace: 'nowrap',
+    color: '#888',
+    fontSize: '12px',
+  },
+  modal: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    padding: '20px',
+    borderRadius: '10px',
+    maxWidth: '500px',
+    textAlign: 'center',
+  },
+  closeButton: {
+    marginTop: '10px',
+    padding: '10px 20px',
+    backgroundColor: '#f53d3d',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '5px',
     cursor: 'pointer',
   },
 };
