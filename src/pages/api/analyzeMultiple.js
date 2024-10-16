@@ -1,5 +1,3 @@
-// src/pages/api/diary/analyzeMultiple.js
-
 import { OpenAI } from 'openai';
 import { protect } from '@/middleware/authMiddleware';
 import Diary from '@/models/Diary';
@@ -17,7 +15,6 @@ export default async function handler(req, res) {
     try {
       await dbConnect();
 
-      // 선택된 일기들의 내용 가져오기
       const diaries = await Diary.find({ _id: { $in: diaryIds } });
 
       const combinedContent = diaries.map((diary) => diary.content).join(' ');

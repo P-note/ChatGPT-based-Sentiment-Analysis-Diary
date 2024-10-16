@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import styles from '../styles/Dashboard.module.css';
+import styles from '@/styles/dashboard.module.css';
 
 export default function Dashboard() {
   const [diaries, setDiaries] = useState([]);
@@ -95,7 +95,7 @@ export default function Dashboard() {
 
   return (
     <div className={styles.container}>
-      <header className={styles.header}>
+      <div className={styles.header}>
         <h1>대시보드</h1>
         <div>
           <button className={styles.button} onClick={handleNewDiary}>
@@ -105,7 +105,7 @@ export default function Dashboard() {
             감정 분석
           </button>
         </div>
-      </header>
+      </div>
 
       {loading ? (
         <p className={styles.notification}>일기 목록을 불러오는 중...</p>
@@ -128,7 +128,7 @@ export default function Dashboard() {
                 <p className={styles.content}>
                   {diary.content.substring(0, 100)}...</p>
               </div>
-              <small className={styles.date}>{new Date(diary.date).toLocaleDateString()}</small>
+              <div className={styles.date}>{new Date(diary.date).toLocaleDateString()}</div>
             </li>
           ))}
         </ul>

@@ -1,5 +1,3 @@
-// src/pages/api/diary/create.js
-
 import dbConnect from '@/lib/dbConnect';
 import Diary from '@/models/Diary';
 import { protect } from '@/middleware/authMiddleware';

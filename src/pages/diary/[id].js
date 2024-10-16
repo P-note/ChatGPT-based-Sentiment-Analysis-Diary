@@ -1,5 +1,5 @@
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 export default function DiaryDetail() {
   const router = useRouter();
@@ -7,8 +7,8 @@ export default function DiaryDetail() {
   const [diary, setDiary] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [analysis, setAnalysis] = useState('');
-  const [modalOpen, setModalOpen] = useState(false); // 모달 상태
+  const [analysis, setAnalysis] = useState(''); // 감정 분석 결과 상태
+  const [analyzing, setAnalyzing] = useState(false); // 감정 분석 로딩 상태
 
   useEffect(() => {
     if (id) {
@@ -40,6 +40,7 @@ export default function DiaryDetail() {
 
   // 감정 분석 API 호출
   const handleAnalyzeSentiment = async () => {
+    setAnalyzing(true); // 감정 분석 중 로딩 상태 활성화
     try {
       const res = await fetch(`/api/analyze`, {
         method: 'POST',
@@ -55,10 +56,11 @@ export default function DiaryDetail() {
       }
 
       const data = await res.json();
-      setAnalysis(data.analysis); // 감정 분석 결과 설정
-      setModalOpen(true); // 모달 열기
+      setAnalysis(data.analysis); // 감정 분석 결과 저장
     } catch (error) {
       setError('감정 분석 중 오류가 발생했습니다.');
+    } finally {
+      setAnalyzing(false); // 감정 분석 완료 시 로딩 상태 해제
     }
   };
 
@@ -76,30 +78,24 @@ export default function DiaryDetail() {
 
   return (
     <div style={styles.container}>
-      {/* 왼쪽 상단의 화살표 뒤로가기 버튼 */}
       <button style={styles.backButton} onClick={() => router.back()}>
-        ←
+        <img style={styles.backimg} src="/backward.svg"/>
       </button>
 
       <h1 style={styles.title}>{diary.title}</h1>
       <h2 style={styles.date}>{new Date(diary.date).toLocaleDateString()}</h2>
-
       <p style={styles.content}>{diary.content}</p>
 
-      <button style={styles.analyzeButton} onClick={handleAnalyzeSentiment}>
-        감정 분석
+      {/* 감정 분석 버튼 */}
+      <button style={styles.analyzeButton} onClick={handleAnalyzeSentiment} disabled={analyzing}>
+        {analyzing ? '분석 중...' : '감정 분석'}
       </button>
 
-      {/* 모달창 */}
-      {modalOpen && (
-        <div style={styles.modal}>
-          <div style={styles.modalContent}>
-            <h2>감정 분석 결과</h2>
-            <p>{analysis}</p>
-            <button onClick={() => setModalOpen(false)} style={styles.closeButton}>
-              닫기
-            </button>
-          </div>
+      {/* 감정 분석 결과 */}
+      {analysis && (
+        <div style={styles.analysisResult}>
+          <h3>감정 분석 결과</h3>
+          <p>{analysis}</p>
         </div>
       )}
     </div>
@@ -124,15 +120,19 @@ const styles = {
     color: '#0070f3',
     cursor: 'pointer',
   },
+  backimg:{
+    width: '3rem',
+    height: '3rem',
+  },
   title: {
     fontSize: '24px',
     fontWeight: 'bold',
-    margin:'0.5rem',
+    marginBottom: '10px',
   },
   date: {
     color: '#888',
     fontSize: '14px',
-    margin:'1.5rem',
+    marginBottom: '20px',
   },
   content: {
     textAlign: 'left',
@@ -150,31 +150,11 @@ const styles = {
     cursor: 'pointer',
     marginTop: '20px',
   },
-  modal: {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContent: {
-    backgroundColor: '#fff',
+  analysisResult: {
+    marginTop: '30px',
     padding: '20px',
-    borderRadius: '10px',
-    maxWidth: '500px',
-    textAlign: 'center',
-  },
-  closeButton: {
-    marginTop: '10px',
-    padding: '10px 20px',
-    backgroundColor: '#f53d3d',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
+    backgroundColor: 'black',
+    borderRadius: '8px',
+    textAlign: 'left',
   },
 };

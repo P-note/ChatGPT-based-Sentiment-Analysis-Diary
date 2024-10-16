@@ -39,7 +39,7 @@ export default function Register() {
   };
 
   return (
-    <div className="register-container">
+    <div className={styles.registerContainer}>
       <h1>회원가입</h1>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <form onSubmit={handleRegister}>

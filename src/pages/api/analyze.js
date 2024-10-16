@@ -1,5 +1,3 @@
-// src/pages/api/diary/analyze.js
-
 import { OpenAI } from 'openai';
 import { protect } from '@/middleware/authMiddleware';
 

@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+// import styles from '@/styles/login.module.css';
+
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -73,9 +75,11 @@ export default function Login() {
 const styles = {
   container: {
     maxWidth: '400px',
-    margin: '0 auto',
+    margin: '5rem auto',
     padding: '20px',
     textAlign: 'center',
+    border: '1px solid #ccc',
+    borderRadius: '10px',
   },
   input: {
     width: '100%',

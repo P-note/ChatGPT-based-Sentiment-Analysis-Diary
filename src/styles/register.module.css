@@ -1,34 +1,34 @@
 
-.register-container {
+.registerContainer {
     max-width: 400px;
-    margin: 0 auto;
+    margin: 5rem auto;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   }
   
-  .register-container h1 {
+  .registerContainer h1 {
     text-align: center;
   }
   
-  .register-container form div {
+  .registerContainer form div {
     margin-bottom: 15px;
   }
   
-  .register-container label {
+  .registerContainer label {
     display: block;
     margin-bottom: 5px;
   }
   
-  .register-container input {
+  .registerContainer input {
     width: 100%;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
   }
   
-  .register-container button {
+  .registerContainer button {
     width: 100%;
     padding: 10px;
     background-color: #0070f3;
@@ -38,7 +38,7 @@
     cursor: pointer;
   }
   
-  .register-container button:hover {
+  .registerContainer button:hover {
     background-color: #005bb5;
   }
   

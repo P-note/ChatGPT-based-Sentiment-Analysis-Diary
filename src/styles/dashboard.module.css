@@ -1,9 +1,10 @@
-
 .container {
-    max-width: 800px;
-    margin: 0 auto;
+    max-width: 70rem;
+    margin: 2rem auto;
     padding: 20px;
     text-align: center;
+    border:3px solid;
+    border-radius: 10px;
 }
 
 .header {
@@ -51,7 +52,7 @@ display: flex;
 justify-content: space-between;
 align-items: center;
 padding: 15px;
-border-bottom: 1px solid #ccc;
+border-bottom: 1px solid #fff;
 text-align: left;
 gap: 10px;
 }
@@ -71,19 +72,19 @@ align-items: flex-start;
 font-size: 18px;
 font-weight: bold;
 margin: 0;
-margin-bottom:1rem;
+margin-bottom:0.5rem;
 }
 
 .content {
 margin: 0;
-color: #555;
+color: #a7a7a7;
 font-size: 14px;
 }
 
 .date {
 white-space: nowrap;
 color: #888;
-font-size: 12px;
+font-size: 14px;
 }
 
 .modal {

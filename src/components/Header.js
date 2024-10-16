@@ -21,7 +21,7 @@ const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '10px 20px',
-    backgroundColor: '#0070f3',
+    backgroundColor: '#169392',
   },
   logo: {
     display: 'flex',
