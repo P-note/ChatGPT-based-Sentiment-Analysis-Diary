@@ -1,0 +1,122 @@
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 20px;
+}
+
+.button {
+padding: 10px 20px;
+background-color: #0070f3;
+color: #fff;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+margin-right: 10px;
+}
+
+.logoutButton {
+padding: 10px 20px;
+background-color: #f53d3d;
+color: #fff;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+}
+
+.analyzeButton {
+padding: 10px 20px;
+background-color: #4CAF50;
+color: #fff;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+}
+
+.list {
+list-style-type: none;
+padding: 0;
+}
+
+.listItem {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 15px;
+border-bottom: 1px solid #ccc;
+text-align: left;
+gap: 10px;
+}
+
+.checkbox {
+margin-right: 10px;
+}
+
+.diaryContent {
+flex-grow: 1;
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+}
+
+.title {
+font-size: 18px;
+font-weight: bold;
+margin: 0;
+margin-bottom:1rem;
+}
+
+.content {
+margin: 0;
+color: #555;
+font-size: 14px;
+}
+
+.date {
+white-space: nowrap;
+color: #888;
+font-size: 12px;
+}
+
+.modal {
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background-color: rgba(0,0,0,0.5);
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.modalContent {
+background-color: #fff;
+padding: 20px;
+border-radius: 10px;
+max-width: 500px;
+text-align: center;
+}
+
+.closeButton {
+margin-top: 10px;
+padding: 10px 20px;
+background-color: #f53d3d;
+color: #fff;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+}
+
+.notification {
+    flex-direction:column;
+    text-align:center;
+}

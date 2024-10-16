@@ -76,14 +76,19 @@ export default function DiaryDetail() {
 
   return (
     <div style={styles.container}>
-      <h1>{diary.title}</h1>
-      <small>{new Date(diary.date).toLocaleDateString()}</small>
+      {/* 왼쪽 상단의 화살표 뒤로가기 버튼 */}
+      <button style={styles.backButton} onClick={() => router.back()}>
+        ←
+      </button>
+
+      <h1 style={styles.title}>{diary.title}</h1>
+      <h2 style={styles.date}>{new Date(diary.date).toLocaleDateString()}</h2>
+
+      <p style={styles.content}>{diary.content}</p>
+
       <button style={styles.analyzeButton} onClick={handleAnalyzeSentiment}>
         감정 분석
       </button>
-      <p>{diary.content}</p>
-
-
 
       {/* 모달창 */}
       {modalOpen && (
@@ -103,10 +108,38 @@ export default function DiaryDetail() {
 
 const styles = {
   container: {
-    maxWidth: '600px',
+    maxWidth: '800px',
     margin: '0 auto',
     padding: '20px',
     textAlign: 'center',
+    position: 'relative',
+  },
+  backButton: {
+    position: 'absolute',
+    top: '20px',
+    left: '20px',
+    fontSize: '24px',
+    background: 'none',
+    border: 'none',
+    color: '#0070f3',
+    cursor: 'pointer',
+  },
+  title: {
+    fontSize: '24px',
+    fontWeight: 'bold',
+    margin:'0.5rem',
+  },
+  date: {
+    color: '#888',
+    fontSize: '14px',
+    margin:'1.5rem',
+  },
+  content: {
+    textAlign: 'left',
+    color: '#fff',
+    fontSize: '16px',
+    lineHeight: '1.6',
+    marginBottom: '20px',
   },
   analyzeButton: {
     padding: '10px 20px',
