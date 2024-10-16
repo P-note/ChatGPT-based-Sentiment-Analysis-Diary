@@ -32,7 +32,7 @@ export default function CreateDiary() {
 
   return (
     <div style={styles.container}>
-      <h1>새 일기 작성</h1>
+      <h1 style={{margin: '2rem'}}>New Diary</h1>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <form onSubmit={handleSubmit}>
         <div>
@@ -43,7 +43,7 @@ export default function CreateDiary() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
-            style={styles.input}
+            style={styles.titleInput}
           />
         </div>
         <div>
@@ -66,25 +66,30 @@ export default function CreateDiary() {
 
 const styles = {
   container: {
-    maxWidth: '600px',
+    maxWidth: '50rem',
     margin: '0 auto',
     padding: '20px',
     textAlign: 'center',
   },
-  input: {
+  titleInput: {
     width: '100%',
     padding: '10px',
     margin: '10px 0',
     border: '1px solid #ccc',
-    borderRadius: '5px',
+    borderRadius: '10px',
+    fontFamily:"Noto Sans KR",
+    fontSize: '1.2rem',
   },
   textarea: {
     width: '100%',
     padding: '10px',
     margin: '10px 0',
     border: '1px solid #ccc',
-    borderRadius: '5px',
-    height: '150px',
+    borderRadius: '10px',
+    height: '70rem',
+    fontFamily:"Noto Sans KR",
+    fontSize: '1.2rem',
+    resize: 'none',
   },
   button: {
     padding: '10px 20px',

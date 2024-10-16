@@ -84,8 +84,14 @@ export default function DiaryDetail() {
 
       <h1 style={styles.title}>{diary.title}</h1>
       <h2 style={styles.date}>{new Date(diary.date).toLocaleDateString()}</h2>
-      <p style={styles.content}>{diary.content}</p>
-
+      <p style={styles.content}>
+        {diary.content.split('\n').map((line, index) => (
+          <span key={index}>
+            {line}
+            <br />
+          </span>
+        ))}
+      </p>
       {/* 감정 분석 버튼 */}
       <button style={styles.analyzeButton} onClick={handleAnalyzeSentiment} disabled={analyzing}>
         {analyzing ? '분석 중...' : '감정 분석'}
@@ -95,7 +101,13 @@ export default function DiaryDetail() {
       {analysis && (
         <div style={styles.analysisResult}>
           <h3>감정 분석 결과</h3>
-          <p>{analysis}</p>
+          <p>{analysis.split('\n').map((line, index) => (
+          <span key={index}>
+            {line}
+            <br />
+          </span>
+        ))}
+      </p>
         </div>
       )}
     </div>
