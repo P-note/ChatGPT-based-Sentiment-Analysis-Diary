@@ -5,7 +5,7 @@ import Footer from '@/components/Footer';
 export default function Layout({ children }) {
   return (
     <>
-      <Theme>
+      <Theme appearance="dark" accentColor="cyan">
         <Header />
           <section>{children}</section>
         <Footer />

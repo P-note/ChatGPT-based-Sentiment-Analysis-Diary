@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from '@/styles/register.module.css';
+import { Button } from '@radix-ui/themes';
 
 export default function Register() {
   const [username, setUsername] = useState('');
@@ -73,7 +74,7 @@ export default function Register() {
             required
           />
         </div>
-        <button type="submit">회원가입</button>
+        <Button variant="soft" type="submit">회원가입</Button>
       </form>
     </div>
   );

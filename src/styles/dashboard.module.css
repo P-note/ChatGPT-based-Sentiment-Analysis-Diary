@@ -52,7 +52,7 @@ display: flex;
 justify-content: space-between;
 align-items: center;
 padding: 15px;
-border-bottom: 1px solid #fff;
+border-bottom: 2px solid;
 text-align: left;
 gap: 10px;
 }
@@ -83,7 +83,7 @@ font-size: 14px;
 
 .date {
 white-space: nowrap;
-color: #888;
+/* color: #888; */
 font-size: 14px;
 }
 
@@ -100,7 +100,7 @@ align-items: center;
 }
 
 .modalContent {
-background-color: #fff;
+/* background-color: #fff; */
 padding: 20px;
 border-radius: 10px;
 max-width: 500px;
@@ -110,8 +110,8 @@ text-align: center;
 .closeButton {
 margin-top: 10px;
 padding: 10px 20px;
-background-color: #f53d3d;
-color: #fff;
+/* background-color: #f53d3d; */
+/* color: #fff; */
 border: none;
 border-radius: 5px;
 cursor: pointer;

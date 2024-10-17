@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { Button, Flex } from '@radix-ui/themes';
 
 export default function DiaryDetail() {
   const router = useRouter();
@@ -77,6 +78,7 @@ export default function DiaryDetail() {
   }
 
   return (
+    <Flex>
     <div style={styles.container}>
       <button style={styles.backButton} onClick={() => router.back()}>
         <img style={styles.backimg} src="/backward.svg"/>
@@ -93,10 +95,13 @@ export default function DiaryDetail() {
         ))}
       </p>
       {/* 감정 분석 버튼 */}
-      <button style={styles.analyzeButton} onClick={handleAnalyzeSentiment} disabled={analyzing}>
+      <Button variant="soft" size="3" onClick={handleAnalyzeSentiment} disabled={analyzing}>
         {analyzing ? '분석 중...' : '감정 분석'}
-      </button>
-
+      </Button>
+      {/* <button style={styles.analyzeButton} onClick={handleAnalyzeSentiment} disabled={analyzing}>
+        {analyzing ? '분석 중...' : '감정 분석'}
+      </button> */}
+      
       {/* 감정 분석 결과 */}
       {analysis && (
         <div style={styles.analysisResult}>
@@ -111,6 +116,7 @@ export default function DiaryDetail() {
         </div>
       )}
     </div>
+    </Flex>
   );
 }
 
@@ -148,7 +154,6 @@ const styles = {
   },
   content: {
     textAlign: 'left',
-    color: '#fff',
     fontSize: '16px',
     lineHeight: '1.6',
     marginBottom: '20px',

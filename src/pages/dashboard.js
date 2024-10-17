@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from '@/styles/dashboard.module.css';
+import { Button, Flex, Text } from '@radix-ui/themes';
 
 export default function Dashboard() {
   const [diaries, setDiaries] = useState([]);
@@ -96,15 +97,15 @@ export default function Dashboard() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h1>대시보드</h1>
-        <div>
-          <button className={styles.button} onClick={handleNewDiary}>
+        <Text size="7" weight="bold">대시보드</Text>
+        <Flex gap = "3">
+          <Button variant='soft' color='green' size='3' onClick={handleNewDiary}>
             새 일기 작성
-          </button>
-          <button className={styles.analyzeButton} onClick={handleAnalyzeSelectedDiaries}>
+          </Button>
+          <Button variant='soft' size='3' color='blue' onClick={handleAnalyzeSelectedDiaries}>
             감정 분석
-          </button>
-        </div>
+          </Button>
+        </Flex>
       </div>
 
       {loading ? (
@@ -134,11 +135,9 @@ export default function Dashboard() {
         </ul>
       )}
 
-      <footer>
-        <br />
-        <br />
-        <button className={styles.logoutButton} onClick={handleLogout}>로그아웃</button>
-      </footer>
+      <div>
+        <Button variant='soft' size='3' color='ruby' style={{margin:'2rem'}} onClick={handleLogout}>로그아웃</Button>
+      </div>
 
       {modalOpen && (
         <div className={styles.modal}>

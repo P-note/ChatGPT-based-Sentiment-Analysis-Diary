@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import { Button } from '@radix-ui/themes';
 // import styles from '@/styles/login.module.css';
 
 
@@ -59,15 +60,15 @@ export default function Login() {
           required
           style={styles.input}
         />
-        <button type="submit" style={styles.button}>
+        <Button type="submit" variant="soft" size="3">
           로그인
-        </button>
+        </Button>
       </form>
 
       {/* 회원가입 페이지로 이동하는 버튼 */}
-      <button onClick={handleRegister} style={styles.registerButton}>
+      <Button onClick={handleRegister} variant="soft" size="3" color="jade" >
         회원가입
-      </button>
+      </Button>
     </div>
   );
 }

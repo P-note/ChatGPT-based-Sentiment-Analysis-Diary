@@ -1,11 +1,12 @@
-import '../styles/globals.css';
+import "@radix-ui/themes/styles.css";
+import '@/styles/globals.css';
 import Layout from '@/pages/layout';
 
 function MyApp({ Component, pageProps }) {
   return (
     <>
     <Layout>
-      <div style={{ paddingBottom: '50px' }}>
+      <div style={{ paddingBottom: '50px'}}>
         <Component {...pageProps} />
       </div>
     </Layout>

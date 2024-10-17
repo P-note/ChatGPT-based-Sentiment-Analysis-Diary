@@ -28,7 +28,7 @@ const styles = {
     alignItems: 'center',
   },
   logoText: {
-    color: '#fff',
+    // color: '#fff',
     fontSize: '24px',
     fontWeight: 'bold',
     textDecoration: 'none',
