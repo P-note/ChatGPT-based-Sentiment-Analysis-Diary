@@ -143,7 +143,12 @@ export default function Dashboard() {
         <div className={styles.modal}>
           <div className={styles.modalContent}>
             <h2>감정 분석 결과</h2>
-            <p>{analysis}</p>
+            <p>{analysis.split('\n').map((line, index) => (
+          <span key={index}>
+            {line}
+            <br />
+          </span>
+        ))}</p>
             <button onClick={() => setModalOpen(false)} className={styles.closeButton}>
               닫기
             </button>
