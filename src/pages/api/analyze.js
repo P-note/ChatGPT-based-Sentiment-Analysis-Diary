@@ -19,8 +19,9 @@ export default async function handler(req, res) {
       const response = await openai.chat.completions.create({
         model: 'gpt-4o-mini',
         messages: [
-          { role: 'system', content: 'You are a professional Psychoterapist. You will answer in Korean.' },
-          { role: 'user', content: `Analyze the sentiment of the following text:\n\n"${text}"\n\nProvide a sentiment analysis, along with a few advices depending on the sentiment.` },
+          { role: 'system', content: 'You are a professional psychotherapist. You will answer in Korean. User is a client who wants to understand their feelings better. I will provide you a diary of the user, so please analyze the sentiment of the diary. Follow a step-by-step process to explore both the explicit and implicit emotions.' },
+          { role: 'user', content: `${text}` },
+          { role: 'assistant', content: 'Let’s analyze the emotions conveyed in this diary. First, identify key phrases that express explicit emotions. Then, examine the overall tone and structure to detect any implicit or hidden emotions, including potential contradictions or subtle shifts in mood. After that, interpret these emotions, both on the surface and beneath, to give a more holistic view. Finally, provide advice based on both the obvious and hidden emotions.' }
         ]
       });
 
