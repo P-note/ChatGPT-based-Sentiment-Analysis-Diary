@@ -4,7 +4,7 @@ export default function Header() {
   return (
     <header style={styles.header}>
       <div style={styles.logo}>
-        <Link href="/">
+        <Link href="/dashboard">
           <div style={styles.logoText}>dIAry</div>
         </Link>
       </div>
