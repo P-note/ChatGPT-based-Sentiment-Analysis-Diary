@@ -105,6 +105,9 @@ export default function Dashboard() {
           <Button variant='soft' size='3' color='blue' onClick={handleAnalyzeSelectedDiaries}>
             감정 분석
           </Button>
+          <Button variant='soft' size='3' color='crimson'>
+            일기 삭제
+          </Button>
         </Flex>
       </div>
 
