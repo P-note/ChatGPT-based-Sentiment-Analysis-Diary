@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Button, Flex, Container, Section, Tabs, Box} from '@radix-ui/themes';
+import { Button, Flex, Container, Section, Tabs, Box, Card, Spinner} from '@radix-ui/themes';
 
 export default function DiaryDetail() {
   const router = useRouter();
@@ -88,14 +88,16 @@ export default function DiaryDetail() {
       <Tabs.List>
         <Tabs.Trigger value="content">content</Tabs.Trigger>
         <Tabs.Trigger value="analysis">analysis</Tabs.Trigger>
+        <div style={styles.ButtonWrapper}>
         <Button variant="soft" size="3" onClick={handleAnalyzeSentiment} disabled={analyzing}>
                 {analyzing ? '분석 중...' : '감정 분석'}
         </Button>
+        </div>
       </Tabs.List>
 
-      <Box>
+      <Card>
         <Tabs.Content value="content">
-          <Flex direction="column" gap="4" pb="2">
+          <Flex>
             <Section style={styles.container}>
               <h1 style={styles.title}>{diary.title}</h1>
               <h2 style={styles.date}>{new Date(diary.date).toLocaleDateString()}</h2>
@@ -119,7 +121,7 @@ export default function DiaryDetail() {
           <Section>
             {/* 감정 분석 결과 */}
             {!analyzing && !analysis && <p>아직 분석을 요청하지 않았습니다.</p>}
-            {analyzing && <p>분석 중...</p>}
+            {analyzing && <p>분석 중...<Spinner/></p>}
             {analysis && (
                 <div style={styles.analysisResult}>
                   <h3>감정 분석 결과</h3>
@@ -134,7 +136,7 @@ export default function DiaryDetail() {
               )}
           </Section>
         </Tabs.Content>
-      </Box>
+      </Card>
     </Tabs.Root>
 
     </Container>
@@ -182,9 +184,13 @@ const styles = {
     marginTop: '20px',
   },
   analysisResult: {
-    padding: '20px',
+    padding: '1.5rem',
     backgroundColor: 'black',
     borderRadius: '8px',
     textAlign: 'left',
+  },
+  ButtonWrapper: {
+    display: "flex",
+    justifyContent: "flex-end",
   },
 };
