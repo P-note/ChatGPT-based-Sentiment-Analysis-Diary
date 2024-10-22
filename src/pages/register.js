@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from '@/styles/register.module.css';
-import { Button } from '@radix-ui/themes';
+import { Button, Card, Section, Flex, Heading, Box } from '@radix-ui/themes';
+import * as Form from "@radix-ui/react-form";
 
 export default function Register() {
   const [username, setUsername] = useState('');
@@ -40,42 +41,50 @@ export default function Register() {
   };
 
   return (
-    <div className={styles.registerContainer}>
-      <h1>회원가입</h1>
+    <Section className={styles.container}>
+    <Card className={styles.registerContainer}>
+      {/* <Heading mt="3">회원가입</Heading> */}
+      <Heading m="4" style={{textAlign:"center"}}>회원가입</Heading>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <form onSubmit={handleRegister}>
-        <div>
+      <Flex direction="column" gap="5">
+        <Box>
           <label htmlFor="username">사용자명</label>
           <input
             type="text"
             id="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            placeholder="username"
             required
           />
-        </div>
-        <div>
-          <label htmlFor="email">이메일</label>
+        </Box>
+        <Box>
+          <label htmlFor="email">이메일 (로그인에 사용됩니다)</label>
           <input
             type="email"
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            placeholder="email"
             required
           />
-        </div>
-        <div>
+        </Box>
+        <Box>
           <label htmlFor="password">비밀번호</label>
           <input
             type="password"
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            placeholder="password"
             required
           />
-        </div>
-        <Button variant="soft" type="submit">회원가입</Button>
+        </Box>
+        <Button variant="soft" type="submit" size="3">회원가입</Button>
+        </Flex>
       </form>
-    </div>
+  </Card>
+  </Section>
   );
 }

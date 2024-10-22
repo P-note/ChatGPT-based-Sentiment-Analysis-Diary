@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { Button } from '@radix-ui/themes';
+import { Button, Container, Heading, Section, Strong } from '@radix-ui/themes';
+import { Card, Flex } from '@radix-ui/themes';
+import * as Form from '@radix-ui/react-form';
+import Link from 'next/link';
 // import styles from '@/styles/login.module.css';
 
 
@@ -40,52 +43,65 @@ export default function Login() {
   };
 
   return (
-    <div style={styles.container}>
-      <h1>로그인</h1>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleLogin}>
-        <input
-          type="email"
-          placeholder="이메일"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          style={styles.input}
-        />
-        <input
-          type="password"
-          placeholder="비밀번호"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          style={styles.input}
-        />
-        <Button type="submit" variant="soft" size="3">
-          로그인
-        </Button>
-      </form>
-
-      {/* 회원가입 페이지로 이동하는 버튼 */}
-      <Button onClick={handleRegister} variant="soft" size="3" color="jade" >
-        회원가입
-      </Button>
-    </div>
+    <Section style={styles.container}>
+    <Card variant="surface" style={styles.card}>
+      <Flex direction="column" gap="3">
+        
+        <Heading as="h1" size="7" m="4">Login to dIAry</Heading>
+        {error && <Strong style={{ color: 'red' }}>{error}</Strong>}
+        
+        <form onSubmit={handleLogin}>
+          <input
+            type="email"
+            placeholder="이메일"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            style={styles.input}
+          />
+          <input
+            type="password"
+            placeholder="비밀번호"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            style={styles.input}
+          />
+          <Button type="submit" variant="soft" size="3" mt="2">
+            로그인
+          </Button>
+        </form>
+        
+        <Link href="/register">
+          <Button variant="soft" size="3" color="jade">
+            회원가입
+          </Button>
+        </Link>
+      
+      </Flex>
+    </Card>
+    </Section>
   );
 }
 
 const styles = {
-  container: {
-    maxWidth: '400px',
-    margin: '5rem auto',
-    padding: '20px',
+  container:{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '85vh',
+  },
+  card: {
+    maxWidth: '27rem',
+    padding: '2rem',
     textAlign: 'center',
-    border: '1px solid #ccc',
-    borderRadius: '10px',
+    border: '0.1rem solid #ccc',
+    borderRadius: '1rem',
   },
   input: {
     width: '100%',
-    padding: '10px',
-    margin: '10px 0',
+    padding: '0.7rem',
+    margin: '0.75rem 0',
     border: '1px solid #ccc',
     borderRadius: '5px',
   },

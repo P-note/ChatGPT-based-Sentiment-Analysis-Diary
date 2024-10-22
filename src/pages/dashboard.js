@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from '@/styles/dashboard.module.css';
-import { Button, Flex, Text } from '@radix-ui/themes';
+import { Button, Container, Flex, Heading, Section, Text } from '@radix-ui/themes';
 
 export default function Dashboard() {
   const [diaries, setDiaries] = useState([]);
@@ -95,9 +95,9 @@ export default function Dashboard() {
   };
 
   return (
-    <div className={styles.container}>
+    <Container className={styles.container}>
       <div className={styles.header}>
-        <Text size="7" weight="bold">대시보드</Text>
+        <Heading as="h1" size="8" m="4">대시보드</Heading>
         <Flex gap = "3">
           <Button variant='soft' color='green' size='3' onClick={handleNewDiary}>
             새 일기 작성
@@ -155,6 +155,6 @@ export default function Dashboard() {
           </div>
         </div>
       )}
-    </div>
+    </Container>
   );
 }
